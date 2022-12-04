@@ -1,2 +1,6 @@
-h1= @question.title
+h1= 'Question'
+h5= @question.title
 p= @question.body
+
+=render  partial:"answers/answer", collection: @answers 
+=render 'answers/form' 

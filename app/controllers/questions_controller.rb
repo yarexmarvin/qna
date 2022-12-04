@@ -6,7 +6,10 @@ class QuestionsController < ApplicationController
     @questions = Question.all
   end
 
-  def show; end
+  def show
+    @answer = @question.answers.new
+    @answers = @question.answers.all
+  end
 
   def new
     @question = Question.new
@@ -14,6 +17,7 @@ class QuestionsController < ApplicationController
 
   def create
     @question = Question.new(question_params)
+    @question.user = current_user
 
     if @question.save
       redirect_to @question, notice: "Your question successfully created."
@@ -34,7 +38,7 @@ class QuestionsController < ApplicationController
 
   def destroy
     @question.destroy
-    redirect_to questions_path
+    redirect_to questions_path, notice: "Your question successfully deleted"
   end
 
   private
@@ -42,6 +46,7 @@ class QuestionsController < ApplicationController
   def find_question
     @question = Question.find(params[:id])
   end
+
 
   def new_question
     @question = Question.new
